@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  usr_id          BigInt      @id @default(autoincrement())
+  usr_frame       String
+  usr_name        String
+  usr_email       String      @unique
+  usr_password    String
+  usr_role_name   String
+  usr_phone       String
+  usr_is_active   String
+  usr_created_by  DateTime
+  usr_update_at   DateTime
+  usr_del         BigInt
+  sale_record     sale_record[]
+}
+
+model location {
+  loc_id          BigInt      @id @default(autoincrement())
+  loc_name        String
+  loc_lat         String // หรืออาจเป็น `Bytes` ถ้าเก็บเป็นข้อมูลทางภูมิศาสตร์
+  loc_long        String // หรืออาจเป็น `Bytes` ถ้าเก็บเป็นข้อมูลทางภูมิศาสตร์
+  loc_address     String
+  loc_tel_num     String
+  loc_province    String
+  loc_created_by  DateTime
+  loc_created_at  DateTime
+  loc_update_at   DateTime
+  branch          branch[]
+}
+
+model branch {
+  brc_id          BigInt      @id @default(autoincrement())
+  brc_name        String
+  brc_created_by  DateTime
+  brc_update_at   DateTime
+  brc_sale_id     String
+  brc_supervisor  String
+  brc_is_deleted  BigInt
+  location        location    @relation(fields: [loc_id], references: [loc_id])
+  loc_id          BigInt
+  sale_record     sale_record[]
+}
+
+model point_of_interest {
+  poi_id          BigInt      @id @default(autoincrement())
+  poi_type_id     BigInt
+  poi_name        String
+  poi_created_at  DateTime
+  poi_poi_name    String
+  type_poi        type_poi[]
+}
+
+model type_poi {
+  typ_id          BigInt      @id @default(autoincrement())
+  poi_id          BigInt
+  typ_name        String
+  typ_color       String
+  typ_description String
+  typ_created_by  DateTime
+  typ_update_at   DateTime
+  typ_row_text    String
+  point_of_interest point_of_interest @relation(fields: [poi_id], references: [poi_id])
+}
+
+model sale_record {
+  sal_id          Int         @id @default(autoincrement())
+  usr_id          BigInt
+  sal_year        String
+  sal_amount      Int
+  sal_count       Int
+  brc_id          BigInt
+  loc_id          BigInt
+  user            user        @relation(fields: [usr_id], references: [usr_id])
+  branch          branch      @relation(fields: [brc_id], references: [brc_id])
+}
+
+model color_indicator {
+  col_id          Int         @id @default(autoincrement())
+  col_id_int      Int
+  col_name        String
+  col_min         String
+  col_max         String
+  col_detail      String
+  col_created_by  String
+}
