@@ -1,0 +1,114 @@
+:root{
+  --topbar-height: 64px;            /* สูงกำลังดีสำหรับ iPhone */
+  --pad-x: 16px;
+  --bg: #ffffff;
+  --fg: #4E54A3;                    /* เทาเข้ม */
+  --muted: #eef2ff;                 /* ฟ้าจาง */
+  --badge: #4f46e5;                 /* คราม */
+  --shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+
+/* รองรับ safe area (รอยบาก) */
+.topbar{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: calc(var(--topbar-height) + env(safe-area-inset-top));
+  padding: calc(8px + env(safe-area-inset-top)) var(--pad-x) 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  background: var(--bg);
+  color: var(--fg);
+  box-shadow: var(--shadow);
+  backdrop-filter: saturate(180%) blur(10px);
+}
+
+/* ปุ่มไอคอน */
+.icon-btn, .pill-btn{
+  border: 0;
+  outline: 0;
+  background: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: #374151;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+
+.icon-btn:active, .pill-btn:active{
+  transform: translateY(1px);
+}
+
+/* โลโก้กึ่งกลาง */
+.brand{
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  pointer-events: none; /* ให้กดปุ่มรอบๆ ได้ง่าย */
+}
+
+.brand-top{
+  font-size: 10px;
+  letter-spacing: .6px;
+  color: #64748b;
+  margin-right: 2px;
+}
+
+.brand-main{
+  font-weight: 800;
+  font-size: 20px;        /* ขนาดพอดีกับ iPhone 16 Pro */
+  letter-spacing: .2px;
+}
+
+.brand-dot{
+  color: #020202;         /* ใส่สีตัว i ให้คล้ายในภาพ */
+  font-style: normal;
+}
+.brand-q{
+    color: #020202;          /* ใส่สีตัว Q ให้คล้ายในภาพ */
+}
+
+/* ฝั่งขวา (กรุ๊ปปุ่ม) */
+.action-group{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--muted);
+  padding: 8px;
+  border-radius: 16px;
+}
+
+/* ปุ่มกรอง + badge */
+.pill-with-badge{
+  position: relative;
+}
+
+.badge{
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--badge);
+  color: #fff;
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,.15);
+}
+
+/* กำหนด max-width ให้หน้ามือถือดูเนียน */
+@media (min-width: 430px){
+  .topbar{
+    margin-inline: auto;
+    max-width: 430px;  /* กรอบเท่าหน้าจอ iPhone 16 Pro (≈ 430pt) */
+    border-radius: 18px;
+  }
+}
