@@ -106,6 +106,24 @@
   0%,100%{ transform: scale(1) rotate(0deg); }
   50%{ transform: scale(1.08) rotate(3deg); }
 }
+.app-main {
+  padding-top: 0; /* ถ้า header sticky ไม่ต้องกันพื้นที่ */
+}
+.i-star{
+  position: relative;
+  display: inline-block;
+  letter-spacing: 0;        /* กันช่องไฟเพี้ยน */
+}
+.i-star-dot{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -0.33em;             /* ขยับขึ้น-ลงได้ตามใจ */
+  width: 0.36em;
+  height: 0.36em;
+  filter: drop-shadow(0 2px 4px rgba(79,70,229,.25));
+  pointer-events: none;
+}
 
 
 /* ตัวหนังสือ/ไอคอนให้คม */
