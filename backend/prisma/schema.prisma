@@ -15,7 +15,7 @@ datasource db {
   extensions = [postgis, fuzzystrmatch, postgis_topology, postgis_raster]
 }
 
-model user {
+model User {
   usr_id         BigInt        @id @default(autoincrement())
   usr_frame      String
   usr_name       String
@@ -93,7 +93,7 @@ model sale_record {
   loc_id BigInt
 
   // relations
-  user   user   @relation(fields: [usr_id], references: [usr_id])
+  user   User   @relation(fields: [usr_id], references: [usr_id])
   branch Branch @relation(fields: [brc_id], references: [brc_id])
   // ถ้าต้องการโยง loc_id ไป location ด้วย ให้เพิ่มบรรทัดนี้ (ถ้ายังไม่ต้องใช้ ก็ยังไม่ต้องเพิ่ม)
   // location location @relation(fields: [loc_id], references: [loc_id])
