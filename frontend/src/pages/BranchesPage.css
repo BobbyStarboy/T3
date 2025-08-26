@@ -1,0 +1,91 @@
+:root{
+  --sat: env(safe-area-inset-top, 0px);
+  --ink: #111827;
+  --muted: #6b7280;
+  --soft: #f3f4f6;
+  --pri: #4f46e5;
+}
+
+/* โครงหน้า */
+.page{
+  padding: calc(12px + var(--sat)) 16px 24px;
+  background: #fff;
+}
+.pagebar{
+  display: grid;
+  grid-template-columns: 56px 1fr 56px;
+  align-items: center;
+  gap: 12px;
+}
+.page-title{
+  text-align: center;
+  font-size: 42px;
+  font-weight: 900;
+  color: #0b0b0b;
+  letter-spacing: .5px;
+  line-height: 1.05;
+  margin: 0;
+}
+
+/* ปุ่มนุ่ม */
+.btn{
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 56px; height: 56px;
+  border: 0; border-radius: 18px;
+  background: #fff; color: var(--ink);
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  cursor: pointer;
+}
+.btn--soft{ background: var(--soft); }
+
+/* badge ใช้มุมขวาบนของปุ่ม / และแบบ inline */
+.badge{
+  position: absolute;
+  top: -8px; right: -8px;
+  min-width: 22px; height: 22px; padding: 0 6px;
+  border-radius: 999px; background: #4f46e5; color: #fff;
+  font-size: 12px; font-weight: 700; line-height: 22px; text-align: center;
+  box-shadow: 0 4px 12px rgba(79,70,229,.45);
+  border: 2px solid #fff;
+}
+.badge--inline{
+  position: static; transform: none;
+  margin-left: 10px;
+}
+
+/* ตำแหน่ง popover */
+.kebab-wrap{ position: relative; }
+.menu-pop{
+  position: absolute;
+  top: 66px; right: 0;
+  width: max(260px, 46vw);
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 12px 32px rgba(0,0,0,.14);
+  padding: 14px 10px;
+  z-index: 20;
+}
+.menu-pop__item{
+  width: 100%;
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 14px;
+  background: transparent; border: 0; cursor: pointer;
+  color: #111827; font-size: 18px; border-radius: 14px;
+}
+.menu-pop__item:hover{ background: #f8fafc; }
+
+/* แถวค้นหา */
+.search-pill{
+  margin-top: 14px;
+  height: 56px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 16px;
+  border-radius: 28px; background: var(--soft); color: var(--muted);
+  user-select: none;
+}
+
+/* ส่วนเนื้อหา */
+.page-section{ margin-top: 22px; }
+.section-title{ font-size: 20px; font-weight: 800; margin: 0 0 8px; }
