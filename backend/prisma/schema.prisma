@@ -3,13 +3,16 @@
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis(version: "3.5.1")]
 }
 
 model user {
@@ -21,9 +24,9 @@ model user {
   usr_role_name  String
   usr_phone      String
   usr_is_active  String
-  usr_created_by DateTime @default(now())
-  usr_update_at  DateTime @updatedAt
-  usr_del        BigInt   @default(0)
+  usr_created_by DateTime      @default(now())
+  usr_update_at  DateTime      @updatedAt
+  usr_del        BigInt        @default(0)
   sale_record    sale_record[]
 }
 
@@ -49,10 +52,9 @@ model Branch {
   brc_sale_id    String
   brc_supervisor String
   brc_is_deleted Boolean  @default(false)
-
   // FK -> location
-  loc_id   BigInt
-  location location @relation(fields: [loc_id], references: [loc_id])
+  loc_id         BigInt
+  location       location @relation(fields: [loc_id], references: [loc_id])
 
   // ✅ back-relation กลับไปหา sale_record
   sale_records sale_record[]
