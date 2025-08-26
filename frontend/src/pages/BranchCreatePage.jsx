@@ -20,7 +20,7 @@ export default function BranchCreatePage() {
   const next = () => {
     if (step === 1 && !branchName.trim()) return alert("กรุณากรอกชื่อสาขา");
     if (step < 3) setStep((s) => s + 1);
-    else nav("/branches"); // จบขั้นตอน -> กลับหน้าจัดการสาขา (จะเปลี่ยนเป็นบันทึกจริงภายหลังได้)
+    else nav("/"); // จบขั้นตอน -> กลับหน้าจัดการสาขา (จะเปลี่ยนเป็นบันทึกจริงภายหลังได้)
   };
   const back = () => (step > 1 ? setStep((s) => s - 1) : nav(-1));
 

@@ -42,7 +42,7 @@ export default function TagsPage() {
         <button className="btn ghost">
           <span className="plus">+</span> เพิ่มแท็กใหม่
         </button>
-        <button className="btn warn">แก้ไข</button>
+        <button id="edit" className="btn warn">แก้ไข</button>
         <button className="btn danger">ลบ</button>
       </div>
 
