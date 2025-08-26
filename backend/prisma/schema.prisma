@@ -17,10 +17,10 @@ datasource db {
 
 model user {
   usr_id         BigInt        @id @default(autoincrement())
-  usr_avatar     String
-  usr_first_name String
-  usr_last_name  String
+  usr_frame      String
+  usr_name       String
   usr_email      String        @unique
+  usr_password   String
   usr_role_name  String
   usr_phone      String
   usr_is_active  String
