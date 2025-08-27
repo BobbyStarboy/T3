@@ -1,11 +1,9 @@
-// src/locations/locations.module.ts
 import { Module } from '@nestjs/common';
-import { LocationsController } from './locations.controller';
 import { LocationsService } from './locations.service';
-import { PrismaModule } from 'src/prisma/prisma.module';
+import { LocationsController } from './locations.controller';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Module({
-  imports: [PrismaModule],
   controllers: [LocationsController],
   providers: [LocationsService],
 })

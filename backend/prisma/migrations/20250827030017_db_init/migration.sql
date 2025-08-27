@@ -1,3 +1,15 @@
+-- CreateExtension
+CREATE EXTENSION IF NOT EXISTS "fuzzystrmatch";
+
+-- CreateExtension
+CREATE EXTENSION IF NOT EXISTS "postgis";
+
+-- CreateExtension
+CREATE EXTENSION IF NOT EXISTS "postgis_raster";
+
+-- CreateExtension
+CREATE EXTENSION IF NOT EXISTS "postgis_topology";
+
 -- CreateTable
 CREATE TABLE "public"."user" (
     "usr_id" BIGSERIAL NOT NULL,
@@ -8,9 +20,9 @@ CREATE TABLE "public"."user" (
     "usr_role_name" TEXT NOT NULL,
     "usr_phone" TEXT NOT NULL,
     "usr_is_active" TEXT NOT NULL,
-    "usr_created_by" TIMESTAMP(3) NOT NULL,
+    "usr_created_by" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "usr_update_at" TIMESTAMP(3) NOT NULL,
-    "usr_del" BIGINT NOT NULL,
+    "usr_del" BIGINT NOT NULL DEFAULT 0,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("usr_id")
 );
@@ -21,28 +33,29 @@ CREATE TABLE "public"."location" (
     "loc_name" TEXT NOT NULL,
     "loc_lat" TEXT NOT NULL,
     "loc_long" TEXT NOT NULL,
+    "coords" geometry(Point, 4326) NOT NULL,
     "loc_address" TEXT NOT NULL,
     "loc_tel_num" TEXT NOT NULL,
     "loc_province" TEXT NOT NULL,
-    "loc_created_by" TIMESTAMP(3) NOT NULL,
-    "loc_created_at" TIMESTAMP(3) NOT NULL,
+    "loc_created_by" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "loc_created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "loc_update_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "location_pkey" PRIMARY KEY ("loc_id")
 );
 
 -- CreateTable
-CREATE TABLE "public"."branch" (
+CREATE TABLE "public"."Branch" (
     "brc_id" BIGSERIAL NOT NULL,
     "brc_name" TEXT NOT NULL,
-    "brc_created_by" TIMESTAMP(3) NOT NULL,
+    "brc_created_by" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "brc_update_at" TIMESTAMP(3) NOT NULL,
     "brc_sale_id" TEXT NOT NULL,
     "brc_supervisor" TEXT NOT NULL,
-    "brc_is_deleted" BIGINT NOT NULL,
+    "brc_is_deleted" BOOLEAN NOT NULL DEFAULT false,
     "loc_id" BIGINT NOT NULL,
 
-    CONSTRAINT "branch_pkey" PRIMARY KEY ("brc_id")
+    CONSTRAINT "Branch_pkey" PRIMARY KEY ("brc_id")
 );
 
 -- CreateTable
@@ -74,9 +87,6 @@ CREATE TABLE "public"."type_poi" (
 CREATE TABLE "public"."sale_record" (
     "sal_id" SERIAL NOT NULL,
     "usr_id" BIGINT NOT NULL,
-    "sal_year" TEXT NOT NULL,
-    "sal_amount" INTEGER NOT NULL,
-    "sal_count" INTEGER NOT NULL,
     "brc_id" BIGINT NOT NULL,
     "loc_id" BIGINT NOT NULL,
 
@@ -99,8 +109,20 @@ CREATE TABLE "public"."color_indicator" (
 -- CreateIndex
 CREATE UNIQUE INDEX "user_usr_email_key" ON "public"."user"("usr_email");
 
+-- CreateIndex
+CREATE INDEX "location_idx" ON "public"."location" USING GIST ("coords");
+
+-- CreateIndex
+CREATE INDEX "sale_record_usr_id_idx" ON "public"."sale_record"("usr_id");
+
+-- CreateIndex
+CREATE INDEX "sale_record_brc_id_idx" ON "public"."sale_record"("brc_id");
+
+-- CreateIndex
+CREATE INDEX "sale_record_loc_id_idx" ON "public"."sale_record"("loc_id");
+
 -- AddForeignKey
-ALTER TABLE "public"."branch" ADD CONSTRAINT "branch_loc_id_fkey" FOREIGN KEY ("loc_id") REFERENCES "public"."location"("loc_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "public"."Branch" ADD CONSTRAINT "Branch_loc_id_fkey" FOREIGN KEY ("loc_id") REFERENCES "public"."location"("loc_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."type_poi" ADD CONSTRAINT "type_poi_poi_id_fkey" FOREIGN KEY ("poi_id") REFERENCES "public"."point_of_interest"("poi_id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -109,4 +131,4 @@ ALTER TABLE "public"."type_poi" ADD CONSTRAINT "type_poi_poi_id_fkey" FOREIGN KE
 ALTER TABLE "public"."sale_record" ADD CONSTRAINT "sale_record_usr_id_fkey" FOREIGN KEY ("usr_id") REFERENCES "public"."user"("usr_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."sale_record" ADD CONSTRAINT "sale_record_brc_id_fkey" FOREIGN KEY ("brc_id") REFERENCES "public"."branch"("brc_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "public"."sale_record" ADD CONSTRAINT "sale_record_brc_id_fkey" FOREIGN KEY ("brc_id") REFERENCES "public"."Branch"("brc_id") ON DELETE RESTRICT ON UPDATE CASCADE;
