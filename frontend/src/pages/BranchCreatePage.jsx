@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./BranchCreatePage.css";
+
 
 export default function BranchCreatePage() {
   const nav = useNavigate();
@@ -17,19 +18,59 @@ export default function BranchCreatePage() {
   const managers = ["นายออเทอร์ โวท์", "น.ส.จิระภา มณี", "นายทศพล ศรีทอง"];
   const salesList = ["นายฮาลั่น มิวอิ้ง", "น.ส.อุบล พิชิต", "นายพชร สุขดี"];
 
+  // เก็บค่าจังหวัดที่ผู้ใช้เลือก
+  const [province, setProvince] = useState("");
+  //const [district, setDistrict] = useState("");
+
+  // เก็บรายการจังหวัดทั้งหมดจาก API
+  const [provinces, setProvinces] = useState([]);
+  //const [district,setDistrict] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch(
+          "https://raw.githubusercontent.com/kongvut/thai-province-data/master/api_province.json"
+        );
+        const data = await res.json(); // data = [{ id, name_th, ... }, ...]
+        setProvinces(
+          data
+            .map((p) => p.name_th)
+            .filter(Boolean)
+            .sort((a, b) => a.localeCompare(b, "th"))
+        );
+      } catch (err) {
+        console.error("โหลดจังหวัดล้มเหลว:", err);
+      }
+
+    })();
+  }, []);
+
   const next = () => {
-    if (step === 1 && !branchName.trim()) return alert("กรุณากรอกชื่อสาขา");
+    if (step === 1 && !branchName.trim()) {
+      return alert("กรุณากรอกชื่อสาขา");
+    }
     if (step < 3) setStep((s) => s + 1);
-    else nav("/"); // จบขั้นตอน -> กลับหน้าจัดการสาขา (จะเปลี่ยนเป็นบันทึกจริงภายหลังได้)
+    else nav("/"); // จบขั้นตอน -> กลับหน้าจัดการสาขา
   };
+
   const back = () => (step > 1 ? setStep((s) => s - 1) : nav(-1));
 
   return (
     <section className="create">
       {/* ปุ่มปิด (ขวาบน) */}
-      <button className="close-btn" aria-label="ปิด" onClick={() => nav("/branches")}>
+      <button
+        className="close-btn"
+        aria-label="ปิด"
+        onClick={() => nav("/branches")}
+      >
         <svg viewBox="0 0 24 24" width="22" height="22">
-          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          <path
+            d="M6 6l12 12M18 6L6 18"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
         </svg>
       </button>
 
@@ -58,7 +99,6 @@ export default function BranchCreatePage() {
             <div className="input input--withIcon">
               <span className="input-value">{branchCode}</span>
               <span className="input-icon" aria-hidden="true">
-                {/* lock */}
                 <svg viewBox="0 0 24 24" width="18" height="18">
                   <path
                     d="M7 11h10v8H7v-8zm2 0V8a3 3 0 016 0v3"
@@ -74,7 +114,10 @@ export default function BranchCreatePage() {
 
           <Field label="ผู้ดูแล:">
             <div className="select">
-              <select value={manager} onChange={(e) => setManager(e.target.value)}>
+              <select
+                value={manager}
+                onChange={(e) => setManager(e.target.value)}
+              >
                 {managers.map((m) => (
                   <option key={m} value={m}>
                     {m}
@@ -83,7 +126,13 @@ export default function BranchCreatePage() {
               </select>
               <span className="chev" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="18" height="18">
-                  <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  <path
+                    d="M6 9l6 6 6-6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
                 </svg>
               </span>
             </div>
@@ -100,7 +149,13 @@ export default function BranchCreatePage() {
               </select>
               <span className="chev" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="18" height="18">
-                  <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  <path
+                    d="M6 9l6 6 6-6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
                 </svg>
               </span>
             </div>
@@ -134,31 +189,59 @@ export default function BranchCreatePage() {
       )}
 
       {step === 3 && (
-        <div className="card">
-          <h2 className="card-title">ตรวจสอบ & ยืนยัน :</h2>
-          <ul className="summary">
-            <li><strong>ชื่อสาขา:</strong> {branchName}</li>
-            <li><strong>รหัสสาขา:</strong> {branchCode}</li>
-            <li><strong>ผู้ดูแล:</strong> {manager}</li>
-            <li><strong>พนักงานขาย:</strong> {sales}</li>
-          </ul>
-          <p className="muted">กด “ถัดไป” เพื่อบันทึก (ตัวอย่างจะพากลับหน้า “จัดการสาขา”).</p>
-        </div>
+  <div className="card">
+    <h2 className="card-title">สถานที่ตั้ง(ต่อ):</h2>
+
+    <Field label="ที่อยู่:">
+      <input className="input" />
+    </Field>
+
+    <Field label="รหัสไปรษณีย์:">
+      <input className="input" />
+    </Field>
+
+    
+    <Field label="จังหวัด:">
+          <div className="select">
+            <select
+              value={province}
+              onChange={(e) => setProvince(e.target.value)}
+            >
+              <option value="" disabled hidden>เลือกจังหวัด</option>
+              {provinces.map((p) => (
+                <option key={p} value={p}>{p}</option>
+              ))}
+            </select>
+            <span className="chev" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            </span>
+          </div>
+        </Field>
+        <Field label="อำเภอ">
+          <div className="select">
+            <select ></select>
+          </div>
+        </Field>
+      </div>
       )}
+
 
       {/* แถบปุ่มล่าง */}
       <div className="cta">
         <button className="btn-primary" onClick={next}>
           {step < 3 ? "ถัดไป" : "บันทึก"}
         </button>
-        <button className="btn-link" onClick={back}>ย้อนกลับ</button>
+        <button className="btn-link" onClick={back}>
+          ย้อนกลับ
+        </button>
       </div>
     </section>
   );
 }
 
 /* ---------- Helpers ---------- */
-
 function Field({ label, children }) {
   return (
     <label className="field">

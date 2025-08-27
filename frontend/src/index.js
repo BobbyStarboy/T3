@@ -4,11 +4,14 @@ import './index.css';
 import 'mapbox-gl/dist/mapbox-gl.css'; // Ensure Mapbox styles are loaded
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { HeroUIProvider } from "@heroui/react";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+  <HeroUIProvider>
     <App />
+    </HeroUIProvider>
   </React.StrictMode>
 );
 
