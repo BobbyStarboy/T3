@@ -6,7 +6,6 @@
 
 generator client {
   provider        = "prisma-client-js"
-  output          = "../generated/prisma"
   previewFeatures = ["postgresqlExtensions"]
 }
 
@@ -28,7 +27,7 @@ model User {
   usr_is_active  Boolean      @default(true)
   usr_created_at DateTime?    @default(now())
   usr_update_at  DateTime?    @updatedAt
-  usr_del        BigInt?      @default(0)
+  usr_del        Int?         @default(0)
 }
 
 enum UserRoleEnum {

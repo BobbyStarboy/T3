@@ -6,7 +6,7 @@ import {
   IsNumber,
   IsString,
 } from 'class-validator';
-import { UserRoleEnum } from 'generated/prisma';
+import { UserRoleEnum } from '@prisma/client';
 import { CreateUserDto } from './create-user.dto';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
@@ -38,5 +38,5 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   usr_role_name?: UserRoleEnum;
 
   @IsNumber()
-  usr_del?: bigint;
+  usr_del?: number;
 }

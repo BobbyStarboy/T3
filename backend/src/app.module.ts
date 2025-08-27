@@ -8,7 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module'; // คุณต้องสร้าง PrismaModule ด้วย
 
 @Module({
-  imports: [UsersModule, PrismaModule],
+  imports: [UsersModule, PrismaModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

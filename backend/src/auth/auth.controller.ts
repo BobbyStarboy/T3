@@ -20,7 +20,7 @@ export class AuthController {
   // Redirect to google signin service (external)
   @Get('google')
   @UseGuards(GoogleAuthGuard)
-  async googleAuth() {
+  async googleAuth(@Request() req, @Res() res) {
     // Initiates the Google OAuth process
   }
 

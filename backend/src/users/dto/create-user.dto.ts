@@ -1,5 +1,5 @@
 import { IsEmail, IsEnum, IsNumber, IsString } from 'class-validator';
-import { UserRoleEnum } from 'generated/prisma';
+import { UserRoleEnum } from '@prisma/client';
 
 export class CreateUserDto {
   @IsNumber()
@@ -30,5 +30,5 @@ export class CreateUserDto {
   usr_role_name?: UserRoleEnum;
 
   @IsNumber()
-  usr_del?: bigint;
+  usr_del?: number;
 }
