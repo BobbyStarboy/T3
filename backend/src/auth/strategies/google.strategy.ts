@@ -1,0 +1,45 @@
+import { PassportStrategy } from '@nestjs/passport';
+import { Strategy, Profile, VerifyCallback } from 'passport-google-oauth20';
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+
+@Injectable()
+export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
+  constructor(private configService: ConfigService) {
+    super({
+      clientID: configService.get('GOOGLE_CLIENT_ID'),
+      clientSecret: configService.get('GOOGLE_CLIENT_SECRET'),
+      callbackURL: `${process.env.BASE_URL}/auth/google/callback`,
+      scope: ['email', 'profile'],
+    });
+  }
+
+  async validate(
+    accessToken: string,
+    refreshToken: string,
+    profile: Profile | undefined,
+    done: VerifyCallback,
+  ): Promise<any> {
+    if (!profile) {
+      // Fail gracefully if Google did not return a profile
+      return done(new Error("Something went wrong on Google's side"), null);
+    }
+
+    const id = profile.id;
+    const emails = profile.emails[0].value;
+    const photos = profile.photos[0].value || '';
+    const givenName = profile.name.givenName || '';
+    const familyName = profile.name.familyName || '';
+
+    const user = {
+      googleId: id,
+      email: emails,
+      firstName: givenName,
+      lastName: familyName,
+      picture: photos,
+      accessToken,
+      refreshToken,
+    };
+    return done(null, user);
+  }
+}

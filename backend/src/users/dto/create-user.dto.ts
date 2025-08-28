@@ -1,19 +1,34 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { Transform } from 'class-transformer';
+import { IsEmail, IsEnum, IsNumber, IsString } from 'class-validator';
+import { UserRoleEnum } from 'generated/prisma';
 
 export class CreateUserDto {
-  @IsString() @IsNotEmpty() usr_frame: string;
-  @IsString() @IsNotEmpty() usr_name: string;
-  @IsEmail()  @IsNotEmpty() usr_email: string;
-  @IsString() @IsNotEmpty() usr_password: string;
-  @IsString() @IsNotEmpty() usr_role_name: string;
-  @IsString() @IsNotEmpty() usr_phone: string;
+  @IsNumber()
+  usr_id: number;
 
-  // ใน schema เป็น String (เช่น 'Y'/'N') — ถ้าอยากเป็น boolean เปลี่ยน schema ทีหลัง
-  @IsString() @IsNotEmpty() usr_is_active: string;
+  @IsEmail()
+  usr_email: string;
 
-  // default เป็น 0 ถ้าไม่ส่งมา (BigInt)
-  @Transform(({ value }) => value !== undefined ? BigInt(value) : BigInt(0))
-  @IsOptional()
+  @IsString()
+  usr_firstName: string;
+
+  @IsString()
+  usr_lastName: string;
+
+  @IsString()
+  usr_googleId: string;
+
+  @IsString()
+  usr_avatar?: string | undefined;
+
+  @IsString()
+  usr_phone?: string;
+
+  @IsString()
+  usr_is_active?: boolean;
+
+  @IsEnum(UserRoleEnum)
+  usr_role_name?: UserRoleEnum;
+
+  @IsNumber()
   usr_del?: bigint;
 }
