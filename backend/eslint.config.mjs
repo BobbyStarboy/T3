@@ -28,7 +28,26 @@ export default tseslint.config(
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'warn',
-      '@typescript-eslint/no-unsafe-argument': 'warn'
+      '@typescript-eslint/no-unsafe-argument': 'warn',
+      '@ts-safeql/check-sql': [
+        'error',
+        {
+          connections: [
+            {
+              connectionUrl: process.env.DATABASE_URL,
+              // The migrations path:
+              migrationsDir: './prisma/migrations',
+              targets: [
+                // This makes `prisma.$queryRaw` and `prisma.$executeRaw` commands linted
+                {
+                  tag: 'prisma.+($queryRaw|$executeRaw)',
+                  transform: '{type}[]',
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
   },
 );

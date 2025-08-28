@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis, fuzzystrmatch, postgis_topology, postgis_raster]
+}
+
+model User {
+  usr_id         Int          @id @default(autoincrement())
+  usr_google_id  String       @unique
+  usr_avatar     String?
+  usr_firstname  String
+  usr_lastname   String?
+  usr_email      String?      @unique
+  usr_role_name  UserRoleEnum @default(SALES)
+  usr_phone      String?      @default("")
+  usr_is_active  Boolean      @default(true)
+  usr_created_at DateTime?    @default(now())
+  usr_update_at  DateTime?    @updatedAt
+  usr_del        Int?         @default(0)
+}
+
+enum UserRoleEnum {
+  CEO
+  SALES
+  SALES_SUPERVISOR
+  ADMIN
+}
