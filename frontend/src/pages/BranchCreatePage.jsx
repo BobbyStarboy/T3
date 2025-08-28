@@ -10,13 +10,13 @@ export default function BranchCreatePage() {
   const [step, setStep] = useState(1);
 
   // form state (step 1)
-  const [branchName, setBranchName] = useState("Shironeko Cafe");
+  const [branchName, setBranchName] = useState("");
   const [branchCode] = useState("MPX-0013"); // ล็อกไว้
-  const [manager, setManager] = useState("นายออเทอร์ โวท์");
-  const [sales, setSales] = useState("นายฮาลั่น มิวอิ้ง");
+  const [manager, setManager] = useState("");
+  const [sales, setSales] = useState("");
 
-  const managers = ["นายออเทอร์ โวท์", "น.ส.จิระภา มณี", "นายทศพล ศรีทอง"];
-  const salesList = ["นายฮาลั่น มิวอิ้ง", "น.ส.อุบล พิชิต", "นายพชร สุขดี"];
+  const managers = ["นายออเทอร์ โวท์", "นางสาวจิระภา มณี", "นายทศพล ศรีทอง"];
+  const salesList = ["นายฮาลั่น มิวอิ้ง", "นางสาวอุบล พิชิต", "นายพชร สุขดี"];
 
   // เก็บค่าจังหวัดที่ผู้ใช้เลือก
   const [province, setProvince] = useState("");
@@ -108,9 +108,7 @@ export default function BranchCreatePage() {
 
           <Field label="ผู้ดูแล:">
             <div className="select">
-              <select
-                value={manager}
-                onChange={(e) => setManager(e.target.value)}>
+              <select value={manager} onChange={(e) => setManager(e.target.value)}>
                 <option value="" disabled hidden>เลือกผู้ดูแล</option>
                 {managers.map((m) => (
                   <option key={m} value={m}>
@@ -243,7 +241,7 @@ function Stepper({ current = 1, total = 3 }) {
     <ol className="stepper" aria-label={`ขั้นตอน ${current} จาก ${total}`}>
       {Array.from({ length: total }).map((_, i) => {
         const n = i + 1;
-        const active = n <= current;
+        const active = n == current;
         return (
           <li key={n} className={`step ${active ? "is-active" : ""}`}>
             <span className="dot">{n}</span>
