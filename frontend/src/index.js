@@ -5,10 +5,13 @@ import 'mapbox-gl/dist/mapbox-gl.css'; // Ensure Mapbox styles are loaded
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+  
     <App />
+    
   </React.StrictMode>
 );
 
