@@ -12,13 +12,13 @@ export default function BranchCreatePage() {
   const [step, setStep] = useState(1);
 
   // form state (step 1)
-  const [branchName, setBranchName] = useState("Shironeko Cafe");
+  const [branchName, setBranchName] = useState("");
   const [branchCode] = useState("MPX-0013"); // ล็อกไว้
-  const [manager, setManager] = useState("นายออเทอร์ โวท์");
-  const [sales, setSales] = useState("นายฮาลั่น มิวอิ้ง");
+  const [manager, setManager] = useState("");
+  const [sales, setSales] = useState("");
 
-  const managers = ["นายออเทอร์ โวท์", "น.ส.จิระภา มณี", "นายทศพล ศรีทอง"];
-  const salesList = ["นายฮาลั่น มิวอิ้ง", "น.ส.อุบล พิชิต", "นายพชร สุขดี"];
+  const managers = ["นายออเทอร์ โวท์", "นางสาวจิระภา มณี", "นายทศพล ศรีทอง"];
+  const salesList = ["นายฮาลั่น มิวอิ้ง", "นางสาวอุบล พิชิต", "นายพชร สุขดี"];
 
   // จังหวัด/อำเภอ/ตำบล (id)
   const [provinceId, setProvinceId] = useState("");
@@ -134,13 +134,13 @@ export default function BranchCreatePage() {
               type="text"
               placeholder="กรอกชื่อสาขา"
               value={branchName}
-              onChange={(e) => setBranchName(e.target.value)}
+              onChange={(e) => setBranchName(e.target.value)}    /* บันทึกเวลา อัปเดตที่ branchName */
             />
           </Field>
 
           <Field label="รหัสสาขา:">
             <div className="input input--withIcon">
-              <span className="input-value">{branchCode}</span>
+              <span className="input-value">{branchCode}</span>       
               <span className="input-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="18" height="18">
                   <path d="M7 11h10v8H7v-8zm2 0V8a3 3 0 016 0v3" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
@@ -152,6 +152,7 @@ export default function BranchCreatePage() {
           <Field label="ผู้ดูแล:">
             <div className="select">
               <select value={manager} onChange={(e) => setManager(e.target.value)}>
+                <option value="" disabled hidden>เลือกผู้ดูแล</option>
                 {managers.map((m) => (
                   <option key={m} value={m}>{m}</option>
                 ))}
@@ -167,8 +168,11 @@ export default function BranchCreatePage() {
           <Field label="พนักงานขาย:">
             <div className="select">
               <select value={sales} onChange={(e) => setSales(e.target.value)}>
-                {salesList.map((person) => (
-                  <option key={person} value={person}>{person}</option>
+                <option value="" disabled hidden>เลือกพนักงานขาย</option>
+                {salesList.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
                 ))}
               </select>
               <span className="chev" aria-hidden="true">
@@ -183,23 +187,15 @@ export default function BranchCreatePage() {
 
       {step === 2 && (
         <div className="card">
-          <h2 className="card-title">ที่อยู่สาขา :</h2>
-          <Field label="ที่อยู่">
-            <input className="input" placeholder="เลขที่, ถนน, ตำบล/แขวง" />
+          <h2 className="card-title">สถานที่ตั้ง:</h2>
+          <Field label="รหัสไปรษณีย์:">
+            <input className="input" placeholder="กรอกรหัสไปรษณีย์" />
           </Field>
           <div className="grid2">
-            <Field label="อำเภอ/เขต">
+            <Field label="ตำแหน่งละติจูด">
               <input className="input" />
             </Field>
-            <Field label="จังหวัด">
-              <input className="input" />
-            </Field>
-          </div>
-          <div className="grid2">
-            <Field label="รหัสไปรษณีย์">
-              <input className="input" />
-            </Field>
-            <Field label="โทรศัพท์">
+            <Field label="ตำแหน่งลองจิจูด">
               <input className="input" />
             </Field>
           </div>
@@ -377,7 +373,7 @@ function Stepper({ current = 1, total = 3 }) {
     <ol className="stepper" aria-label={`ขั้นตอน ${current} จาก ${total}`}>
       {Array.from({ length: total }).map((_, i) => {
         const n = i + 1;
-        const active = n <= current;
+        const active = n == current;
         return (
           <li key={n} className={`step ${active ? "is-active" : ""}`}>
             <span className="dot">{n}</span>
