@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import 'mapbox-gl/dist/mapbox-gl.css'; // Ensure Mapbox styles are loaded
+import 'mapbox-gl/dist/mapbox-gl.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { HeroUIProvider } from "@heroui/react";
@@ -9,8 +9,8 @@ import { HeroUIProvider } from "@heroui/react";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-  <HeroUIProvider>
-    <App />
+    <HeroUIProvider>
+      <App />
     </HeroUIProvider>
   </React.StrictMode>
 );
