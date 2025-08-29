@@ -36,3 +36,21 @@ enum UserRoleEnum {
   SALES_SUPERVISOR
   ADMIN
 }
+
+model Location {
+  loc_id          Int    @id @unique @default(autoincrement())
+  loc_name        String
+  loc_lat         Float
+  loc_long        Float
+  loc_address     String
+  loc_postcode    String
+  loc_subdistrict String
+  loc_district    String
+  loc_province    String
+  loc_geojson     Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy String   @default("system")
+  updatedBy String   @default("system")
+}
