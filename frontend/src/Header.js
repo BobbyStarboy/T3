@@ -1,4 +1,5 @@
 // src/Header.js
+import { Grid } from "lucide-react";
 import "./Header.css";
 
 export default function Header({
@@ -13,52 +14,7 @@ export default function Header({
       <div className="hdr-wrap">
         {/* โลโก้กลาง */}
         <div className="brand">
-          <div className="brand-sub">MY ORDER</div>
-
-          <div className="brand-row" aria-label="Orbit IQ">
-            {/* คำว่า Orbit โดยให้ "ดาว" เป็นจุดบนตัว i */}
-            <span className="brand-orbit">
-              Orb
-              <span
-                className="i-star"
-                aria-hidden="true"
-                style={{ position: "relative", display: "inline-block", letterSpacing: 0 }}
-              >
-                {/* dotless i (ไม่มีจุด) */}
-                {"\u0131"}
-                {/* ดาวทำหน้าที่เป็นจุด */}
-                <svg
-                  viewBox="0 0 24 24"
-                  role="presentation"
-                  style={{
-                    position: "absolute",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    top: "-0.33em",
-                    width: "0.36em",
-                    height: "0.36em",
-                    filter: "drop-shadow(0 2px 4px rgba(79,70,229,.25))",
-                    pointerEvents: "none",
-                  }}
-                >
-                  <defs>
-                    <linearGradient id="sparkle-g-header" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stopColor="#7c3aed" />
-                      <stop offset="60%" stopColor="#4f46e5" />
-                      <stop offset="100%" stopColor="#3b82f6" />
-                    </linearGradient>
-                  </defs>
-                  <polygon
-                    points="12,2 14.6,9.4 22,12 14.6,14.6 12,22 9.4,14.6 2,12 9.4,9.4"
-                    fill="url(#sparkle-g-header)"
-                  />
-                </svg>
-              </span>
-              t
-            </span>
-
-            <span className="brand-iq">IQ</span>
-          </div>
+          <img src="/OrbitIQ.png" alt="logo" className="brand-logo" style={{ width: "136px", height: "auto", marginTop: "24px" }} />
         </div>
 
         {/* แถวปุ่ม + ค้นหา */}

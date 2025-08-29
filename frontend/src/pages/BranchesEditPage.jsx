@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./BranchEditPage.css";
+import "./BranchesEditPage.css";
 import Swal from "sweetalert2";
 
 

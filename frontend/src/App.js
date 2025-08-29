@@ -14,7 +14,7 @@ import TagsPage from "./pages/TagsPage";
 import BranchesPage from "./pages/BranchesPage";
 import Header from "./Header";
 import BranchCreatePage from "./pages/BranchCreatePage";
-import BranchEditPage from "./pages/BranchEditPage";
+import BranchEditPage from "./pages/BranchesEditPage";
 
 /* ----- เพจชั่วคราวกันลิงก์พัง (ลบเมื่อมีเพจจริง) ----- */
 function BookmarksPage() { return <div style={{ padding: 16 }}>หน้ารายการบุ๊กมาร์ก (ตัวอย่าง)</div>; }

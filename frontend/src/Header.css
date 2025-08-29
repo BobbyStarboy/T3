@@ -56,7 +56,7 @@
   padding: 0 16px;
   border-radius: 28px;                 /* pill มุมมนแบบในภาพ */
   background: var(--pill);
-  color: var(--muted);
+  color: black;
   cursor: pointer; user-select:none;
 }
 .search-pill svg{ width:22px; height:22px; }
@@ -79,7 +79,7 @@
 .btn--filter{ position: relative; }
 .badge{
   position: absolute;
-  top: -10px; right: -10px;             /* ให้อยู่นอกมุมขวาบนเหมือนภาพ */
+  top: -10px; right: -10px;             /* ให้อู่นอกมุมขวาบนเหมือนภาพ */
   min-width: 24px; height: 24px; padding: 0 6px;
   border-radius: 999px;
   background: var(--pri); color:#fff; font-weight: 700;
