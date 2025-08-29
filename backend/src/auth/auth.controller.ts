@@ -12,6 +12,7 @@ import {
 import { AuthService } from './auth.service';
 import { GoogleAuthGuard } from './guards/google-auth.guard';
 import type { Response } from 'express';
+import { join } from 'path';
 import {
   ApiTags,
   ApiOperation,
@@ -54,7 +55,7 @@ export class AuthController {
     description: 'Bad request - Invalid callback data',
   })
   @ApiExcludeEndpoint()
-  @Redirect('/user/whoami', 302)
+  @Redirect(`${process.env.REACT_APP_BASE_URL}/login`, 302)
   @UseGuards(GoogleAuthGuard)
   async googleAuthRedirect(@Request() req: Request, @Res() res: Response) {
     if (!req) {
@@ -65,6 +66,11 @@ export class AuthController {
     res.cookie('access_token', accessToken, {
       httpOnly: true,
     });
+  }
+
+  @Get('/status')
+  async loginStatus(@Request() req): Promise<any> {
+    return this.authService.status(req);
   }
 
   // logout
@@ -87,11 +93,11 @@ export class AuthController {
     },
   })
   @HttpCode(200)
+  @Redirect(`${process.env.REACT_APP_BASE_URL}/login`, 302)
   async logout(@Res() res: Response) {
-    // Clear the cookie
     res.clearCookie('access_token', {
       httpOnly: true,
     });
-    return res.json({ message: 'Successfully logged out' });
+    return;
   }
 }

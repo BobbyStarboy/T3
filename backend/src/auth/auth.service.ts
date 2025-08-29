@@ -1,7 +1,6 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Request } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
-import { IsEmail } from 'class-validator';
 
 @Injectable()
 export class AuthService {
@@ -43,5 +42,16 @@ export class AuthService {
     return {
       accessToken: this.jwtService.sign(payload),
     };
+  }
+
+  // Check JWT token validity
+  async status(request: any): Promise<any> {
+    const token = request.cookies['access_token'];
+    try {
+      const inputpayload = await this.jwtService.verify(token);
+      return { login: true };
+    } catch (e) {
+      return { login: false };
+    }
   }
 }

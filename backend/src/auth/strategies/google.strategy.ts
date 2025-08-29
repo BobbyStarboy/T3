@@ -14,6 +14,12 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     });
   }
 
+  authorizationParams(): Record<string, string> {
+    return {
+      prompt: 'select_account', // or 'consent select_account' if you want the consent screen too
+      include_granted_scopes: 'false',
+    };
+  }
   async validate(
     accessToken: string,
     refreshToken: string,

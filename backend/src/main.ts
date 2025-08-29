@@ -6,11 +6,14 @@ import cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { join } from 'path';
-import { console } from 'inspector';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.enableCors({
+    origin: process.env.REACT_APP_BASE_URL,
+    credentials: true,
+  });
   const config = new DocumentBuilder()
     .setTitle('OrbitIQ | Internal API')
     .setDescription(
