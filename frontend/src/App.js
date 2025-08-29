@@ -14,6 +14,7 @@ import TagsPage from "./pages/TagsPage";
 import BranchesPage from "./pages/BranchesPage";
 import Header from "./Header";
 import BranchCreatePage from "./pages/BranchCreatePage";
+import BranchEditPage from "./pages/BranchEditPage";
 
 /* ----- เพจชั่วคราวกันลิงก์พัง (ลบเมื่อมีเพจจริง) ----- */
 function BookmarksPage() { return <div style={{ padding: 16 }}>หน้ารายการบุ๊กมาร์ก (ตัวอย่าง)</div>; }
@@ -71,6 +72,7 @@ function AppShell() {
           />
           <Route path="/branches/new" element={<BranchCreatePage />} />
           <Route path="/branches/requests" element={<BranchRequestsPage />} />
+          <Route path="/branches/edit" element={<BranchEditPage />} />
 
           {/* การตั้งค่า/แท็ก */}
           <Route path="/settings/tags" element={<TagsPage />} />
