@@ -15,11 +15,18 @@ import BranchesPage from "./pages/BranchesPage";
 import Header from "./Header";
 import BranchCreatePage from "./pages/BranchCreatePage";
 import BranchEditPage from "./pages/BranchesEditPage";
+import BranchInfo from "./pages/BranchInfo";
 
-/* ----- เพจชั่วคราวกันลิงก์พัง (ลบเมื่อมีเพจจริง) ----- */
-function BookmarksPage() { return <div style={{ padding: 16 }}>หน้ารายการบุ๊กมาร์ก (ตัวอย่าง)</div>; }
-function SettingsPage()  { return <div style={{ padding: 16 }}>หน้าตั้งค่าระบบ (ตัวอย่าง)</div>; }
-function BranchRequestsPage() { return <div style={{ padding: 16 }}>คำขอสร้างสาขา (ตัวอย่าง)</div>; }
+/* ----- เพจชั่วคราวกันลิงก์พัง ----- */
+function BookmarksPage() {
+  return <div style={{ padding: 16 }}>หน้ารายการบุ๊กมาร์ก (ตัวอย่าง)</div>;
+}
+function SettingsPage() {
+  return <div style={{ padding: 16 }}>หน้าตั้งค่าระบบ (ตัวอย่าง)</div>;
+}
+function BranchRequestsPage() {
+  return <div style={{ padding: 16 }}>คำขอสร้างสาขา (ตัวอย่าง)</div>;
+}
 /* ------------------------------------------------------ */
 
 function AppShell() {
@@ -70,6 +77,7 @@ function AppShell() {
               />
             }
           />
+          <Route path="/branches/info" element={<BranchInfo />} />
           <Route path="/branches/new" element={<BranchCreatePage />} />
           <Route path="/branches/requests" element={<BranchRequestsPage />} />
           <Route path="/branches/edit" element={<BranchEditPage />} />
@@ -80,7 +88,10 @@ function AppShell() {
 
           {/* อื่น ๆ */}
           <Route path="/bookmarks" element={<BookmarksPage />} />
-          <Route path="*" element={<div style={{ padding: 16 }}>ไม่พบหน้า</div>} />
+          <Route
+            path="*"
+            element={<div style={{ padding: 16 }}>ไม่พบหน้า</div>}
+          />
         </Routes>
       </main>
     </>

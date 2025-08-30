@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Post,
   UseGuards,
   Request,
   Res,
@@ -12,7 +11,7 @@ import {
 import { AuthService } from './auth.service';
 import { GoogleAuthGuard } from './guards/google-auth.guard';
 import type { Response } from 'express';
-import { join } from 'path';
+
 import {
   ApiTags,
   ApiOperation,
