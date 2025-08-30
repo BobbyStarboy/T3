@@ -16,9 +16,15 @@ import Header from "./Header";
 import BranchCreatePage from "./pages/BranchCreatePage";
 
 /* ----- เพจชั่วคราวกันลิงก์พัง (ลบเมื่อมีเพจจริง) ----- */
-function BookmarksPage() { return <div style={{ padding: 16 }}>หน้ารายการบุ๊กมาร์ก (ตัวอย่าง)</div>; }
-function SettingsPage()  { return <div style={{ padding: 16 }}>หน้าตั้งค่าระบบ (ตัวอย่าง)</div>; }
-function BranchRequestsPage() { return <div style={{ padding: 16 }}>คำขอสร้างสาขา (ตัวอย่าง)</div>; }
+function BookmarksPage() {
+  return <div style={{ padding: 16 }}>หน้ารายการบุ๊กมาร์ก (ตัวอย่าง)</div>;
+}
+function SettingsPage() {
+  return <div style={{ padding: 16 }}>หน้าตั้งค่าระบบ (ตัวอย่าง)</div>;
+}
+function BranchRequestsPage() {
+  return <div style={{ padding: 16 }}>คำขอสร้างสาขา (ตัวอย่าง)</div>;
+}
 /* ------------------------------------------------------ */
 
 function AppShell() {
@@ -78,7 +84,10 @@ function AppShell() {
 
           {/* อื่น ๆ */}
           <Route path="/bookmarks" element={<BookmarksPage />} />
-          <Route path="*" element={<div style={{ padding: 16 }}>ไม่พบหน้า</div>} />
+          <Route
+            path="*"
+            element={<div style={{ padding: 16 }}>ไม่พบหน้า</div>}
+          />
         </Routes>
       </main>
     </>
